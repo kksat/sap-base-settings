@@ -16,10 +16,12 @@
   command: "id -Z"
   register: sap_base_settings_register_selinux_context
   changed_when: false
+  ignore_errors: true
 
 - name: Debug current SE Linux context
   debug:
     msg: "the current context is {{ sap_base_settings_register_selinux_context.stdout.split(':')[2] }} "
+  ignore_errors: true
 
 - name: Adding SE Linux rule so that hostname will work from initrd_t context
   block:
@@ -29,7 +31,7 @@
         dest=/root/hostnamectl-fix.pp
     - name: apply SE Linux Rule
       command: semodule -i /root/hostnamectl-fix.pp
-  when: sap_base_settings_register_selinux_context.stdout.split(':')[2] == 'initrc_t'
+  when: sap_base_settings_register_selinux_context.stdout.split(':')[2] is defined and sap_base_settings_register_selinux_context.stdout.split(':')[2] == 'initrc_t'
 
 - name: ensure short system hostname is set
   hostname:
