@@ -88,6 +88,10 @@
 
 ### DNS is not that necessary and as such the errors are ignored
 ### for production it is strongly recommended to have proper DNS setup
+- name: ensure dig command is installed
+  package:
+    name: bind-utils
+    state: present
 
 - name: check dns forward settings
   shell: test "$(dig {{ sap_hostname }}.{{ sap_domain }} +short)" = "{{ sap_ip }}"
