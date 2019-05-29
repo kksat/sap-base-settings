@@ -1,6 +1,8 @@
 Role Name: sap-base-settings
 ============================
 
+(Work in Progress)
+
 Sets hostname and locale according to [SAP Note 2369910](https://launchpad.support.sap.com/#/notes/2369910)
 
 This is required by SAP Netweaver and SAP HANA installations
